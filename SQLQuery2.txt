@@ -1,0 +1,36 @@
+--Q1--
+select * from Products where UnitPrice>30 and UnitPrice<40 
+
+--Q2--
+select *from Products tbl1 inner join Categories tbl2 on tbl1.CategoryID=tbl2.CategoryID where tbl2.CategoryName like 'Condiments'
+
+--Q3--
+select *from Products tbl1 inner join Categories tbl2 on tbl1.CategoryID=tbl2.CategoryID where tbl2.CategoryName like '%s%' order by ProductName
+
+--Q4--
+select distinct ProductName from Orders tbl1 inner join [Order Details] tbl2 on tbl1.OrderID=tbl2.OrderID inner join Products tbl3 on tbl2.ProductID=tbl3.ProductID where tbl1.CustomerID like 'ALFKI'
+
+--Q5-- 
+select * from Orders tbl1 inner join Customers tbl2 on tbl1.CustomerID=tbl2.CustomerID where tbl2.City like 'London' or tbl2.Country like 'Brazil' 
+
+--Q6--
+select tbl1.ContactName from Customers tbl1 inner join Orders tbl2 on tbl1.CustomerID=tbl2.CustomerID inner join Shippers tbl3 on tbl2.ShipVia=tbl3.ShipperID where tbl3.CompanyName like 'Federal Shipping' 
+
+--Q7-- 
+create procedure Q7 @Orderid int
+as
+begin 
+select ProductName from [Order Details] tbl1 inner join Products tbl2 on tbl1.ProductID=tbl2.ProductID where tbl1.OrderID=@Orderid
+select sum(tbl2.UnitPrice) as OrderPrice from [Order Details] tbl1 inner join Products tbl2 on tbl1.ProductID=tbl2.ProductID where tbl1.OrderID=@Orderid 
+end 
+go
+exec Q7 @orderid=10262 
+
+--Q8--
+select CustomerID, EmployeeID, ShipVia, Freight, shipName, ShipAddress, ShipCity, ShipRegion, ShipPostalCode, ShipCountry from Orders where (EmployeeID=2 or EmployeeID=5) and ShipVia=1 and ShipName like 'b%'
+
+--Q9--
+
+
+--Q10--
+select CustomerID, Region, country from Customers where Country like 'france' or Country like 'Canada'
